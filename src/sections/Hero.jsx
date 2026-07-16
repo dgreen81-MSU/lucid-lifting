@@ -115,8 +115,8 @@ export const Hero = () => {
                 },
                 {
                   icon: FaInstagram,
-                  href: "https://www.instagram.com/lucid_lifter/",
-                  label: "Instagram",
+                  href: "https://www.instagram.com/lucidliftingco/",
+                  label: "Lucid Lifting Instagram",
                 },
               ].map((social) => (
                 <a
