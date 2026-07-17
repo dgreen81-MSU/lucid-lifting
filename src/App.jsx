@@ -1,10 +1,12 @@
 import { Navbar } from "./layout/Navbar";
-import { Hero } from "@/sections/Hero";
-import { AboutLucid } from "@/sections/AboutLucid";
-import { FeaturedApparel } from "@/sections/FeaturedApparel";
-import { TrainingExperience } from "@/sections/TrainingExperience";
-import { Community } from "@/sections/Community";
-import { Contact } from "@/sections/Contact";
+import { Footer } from "./layout/Footer";
+
+import { Hero } from "./sections/Hero";
+import { AboutLucid } from "./sections/AboutLucid";
+import { FeaturedApparel } from "./sections/FeaturedApparel";
+import { TrainingExperience } from "./sections/TrainingExperience";
+import { Community } from "./sections/Community";
+import { Contact } from "./sections/Contact";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Community />
         <Contact />
       </main>
+
+      <Footer />
     </div>
   );
 }

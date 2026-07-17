@@ -1,18 +1,27 @@
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { useState } from "react";
+import emailjs from "@emailjs/browser";
+import {
+  Mail,
+  MapPin,
+  Send,
+  CheckCircle,
+  AlertCircle,
+} from "lucide-react";
+import { FaInstagram } from "react-icons/fa";
 import { Button } from "../components/Button";
 
 const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "hello@lucidlifting.com",
-    href: "mailto:hello@lucidlifting.com",
+    value: "lucidliftingco@gmail.com",
+    href: "mailto:lucidliftingco@gmail.com",
   },
   {
-    icon: Phone,
-    label: "Phone",
-    value: "+1 (720) 555-2026",
-    href: "tel:+17205552026",
+    icon: FaInstagram,
+    label: "Instagram",
+    value: "@lucidliftingco",
+    href: "https://www.instagram.com/lucidliftingco/",
   },
   {
     icon: MapPin,
@@ -23,6 +32,111 @@ const contactInfo = [
 ];
 
 export const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [submitStatus, setSubmitStatus] = useState({
+    type: null,
+    message: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((previousFormData) => ({
+      ...previousFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (isLoading) {
+      return;
+    }
+
+    const trimmedFormData = {
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      message: formData.message.trim(),
+    };
+
+    if (
+      !trimmedFormData.name ||
+      !trimmedFormData.email ||
+      !trimmedFormData.message
+    ) {
+      setSubmitStatus({
+        type: "error",
+        message: "Please complete all fields before sending your message.",
+      });
+
+      return;
+    }
+
+    setIsLoading(true);
+
+    setSubmitStatus({
+      type: null,
+      message: "",
+    });
+
+    try {
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error(
+          "EmailJS configuration is missing. Please check your environment variables."
+        );
+      }
+
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          name: trimmedFormData.name,
+          email: trimmedFormData.email,
+          message: trimmedFormData.message,
+        },
+        {
+          publicKey,
+        }
+      );
+
+      setSubmitStatus({
+        type: "success",
+        message:
+          "Message sent successfully! Lucid Lifting will get back to you soon.",
+      });
+
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("EmailJS error:", error);
+
+      setSubmitStatus({
+        type: "error",
+        message:
+          error?.text ||
+          error?.message ||
+          "Failed to send message. Please try again later or contact Lucid Lifting through Instagram.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <section id="contact" className="py-32 relative overflow-hidden">
       {/* Background Effects */}
@@ -55,7 +169,12 @@ export const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
           {/* Contact Form */}
           <div className="glass p-8 rounded-3xl border border-primary/30 animate-fade-in animation-delay-300">
-            <form className="space-y-6">
+            <form
+              className="space-y-6"
+              onSubmit={handleSubmit}
+              aria-busy={isLoading}
+            >
+              {/* Name */}
               <div>
                 <label
                   htmlFor="name"
@@ -66,13 +185,19 @@ export const Contact = () => {
 
                 <input
                   id="name"
+                  name="name"
                   type="text"
                   required
+                  autoComplete="name"
+                  disabled={isLoading}
+                  value={formData.name}
+                  onChange={handleChange}
                   placeholder="Your name..."
-                  className="w-full px-4 py-3 bg-surface rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  className="w-full px-4 py-3 bg-surface rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:cursor-not-allowed disabled:opacity-60"
                 />
               </div>
 
+              {/* Email */}
               <div>
                 <label
                   htmlFor="email"
@@ -83,13 +208,19 @@ export const Contact = () => {
 
                 <input
                   id="email"
+                  name="email"
                   type="email"
                   required
+                  autoComplete="email"
+                  disabled={isLoading}
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="your@email.com"
-                  className="w-full px-4 py-3 bg-surface rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  className="w-full px-4 py-3 bg-surface rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all disabled:cursor-not-allowed disabled:opacity-60"
                 />
               </div>
 
+              {/* Message */}
               <div>
                 <label
                   htmlFor="message"
@@ -100,45 +231,128 @@ export const Contact = () => {
 
                 <textarea
                   id="message"
+                  name="message"
                   rows={5}
                   required
+                  disabled={isLoading}
+                  value={formData.message}
+                  onChange={handleChange}
                   placeholder="Your message..."
-                  className="w-full px-4 py-3 bg-surface rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
+                  className="w-full px-4 py-3 bg-surface rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none disabled:cursor-not-allowed disabled:opacity-60"
                 />
               </div>
 
-              <Button className="w-full" type="submit" size="lg">
-                Start Your Journey
-                <Send />
+              {/* Submit Button */}
+              <Button
+                className="w-full"
+                type="submit"
+                size="lg"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>Sending...</>
+                ) : (
+                  <>
+                    Send Message
+                    <Send className="w-5 h-5" />
+                  </>
+                )}
               </Button>
+
+              {/* Submission Status */}
+              {submitStatus.message && (
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-sm ${
+                    submitStatus.type === "success"
+                      ? "border-green-500/30 bg-green-500/10 text-green-400"
+                      : "border-red-500/30 bg-red-500/10 text-red-400"
+                  }`}
+                >
+                  {submitStatus.type === "success" ? (
+                    <CheckCircle className="w-5 h-5 shrink-0" />
+                  ) : (
+                    <AlertCircle className="w-5 h-5 shrink-0" />
+                  )}
+
+                  <span>{submitStatus.message}</span>
+                </div>
+              )}
             </form>
           </div>
 
-          {/* Contact Information */}
+          {/* Contact Information and Availability */}
           <div className="space-y-6 animate-fade-in animation-delay-500">
-            {contactInfo.map((item, index) => {
-              const Icon = item.icon;
+            {/* Contact Information */}
+            <div className="glass rounded-3xl p-8">
+              <h3 className="text-xl font-semibold mb-6">
+                Contact Information
+              </h3>
 
-              return (
-                <a
-                  key={index}
-                  href={item.href}
-                  className="glass p-6 rounded-2xl border border-border hover:border-primary/50 transition-all flex items-center gap-5"
-                >
-                  <div className="p-4 rounded-xl bg-primary/10">
-                    <Icon className="text-primary" size={24} />
-                  </div>
+              <div className="space-y-4">
+                {contactInfo.map((item) => {
+                  const Icon = item.icon;
+                  const isExternalLink = item.href.startsWith("http");
+                  const isClickable = item.href !== "#";
 
-                  <div>
-                    <p className="text-sm text-muted-foreground">
-                      {item.label}
-                    </p>
+                  const cardContent = (
+                    <>
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                        <Icon className="w-5 h-5 text-primary" />
+                      </div>
 
-                    <h3 className="font-semibold">{item.value}</h3>
-                  </div>
-                </a>
-              );
-            })}
+                      <div>
+                        <p className="text-sm text-muted-foreground">
+                          {item.label}
+                        </p>
+
+                        <p className="font-medium">{item.value}</p>
+                      </div>
+                    </>
+                  );
+
+                  if (!isClickable) {
+                    return (
+                      <div
+                        key={item.label}
+                        className="flex items-center gap-4 p-4 rounded-xl"
+                      >
+                        {cardContent}
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target={isExternalLink ? "_blank" : undefined}
+                      rel={isExternalLink ? "noopener noreferrer" : undefined}
+                      className="flex items-center gap-4 p-4 rounded-xl hover:bg-surface transition-colors group"
+                    >
+                      {cardContent}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Availability Card */}
+            <div className="glass rounded-3xl p-8 border border-primary/30">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+
+                <span className="font-medium">Currently Available</span>
+              </div>
+
+              <p className="text-muted-foreground text-sm">
+                Lucid Lifting is currently accepting personal training
+                inquiries, fitness consultations, and new opportunities to
+                build within the community. Reach out and let&apos;s start
+                working toward something stronger.
+              </p>
+            </div>
           </div>
         </div>
       </div>
