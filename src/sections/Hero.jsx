@@ -10,6 +10,18 @@ export const Hero = () => {
   const COLLAGE_DURATION = 12000;
 
   /* =========================================
+     BRAND COLORS
+  ========================================== */
+  const PURPLE = "#8E72A3";
+  const GOLD = "#C5A253";
+
+  const outlinedText = {
+    WebkitTextStroke: "0.75px rgba(255,255,255,0.85)",
+    paintOrder: "stroke fill",
+    textShadow: "0 2px 8px rgba(0,0,0,0.65)",
+  };
+
+  /* =========================================
      PARTICLES
      Generate once so they don't jump around
   ========================================== */
@@ -135,18 +147,63 @@ export const Hero = () => {
           />
         </video>
 
-        {/* Slight overlay */}
-        <div className="absolute inset-0 bg-black/10" />
+        {/* Slight dark overlay */}
+        <div className="absolute inset-0 bg-black/15" />
 
-        {/* Video Shop Button */}
-        <div className="absolute inset-x-0 bottom-20 z-20 flex justify-center">
-          <a
-            href="#featured-apparel"
-            className="inline-flex items-center gap-3 bg-black px-8 py-4 text-xs font-bold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-white hover:text-black"
-          >
-            Shop Now
-            <ArrowRight className="h-4 w-4" />
-          </a>
+        {/* Bottom gradient for text readability */}
+        <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+        {/* =====================================
+            VIDEO HERO CONTENT
+        ====================================== */}
+        <div className="absolute inset-0 z-20 flex items-end">
+          <div className="w-full px-6 pb-20 sm:px-10 md:pb-24 lg:px-16 xl:px-24">
+            <div className="max-w-2xl">
+
+              {/* Eyebrow */}
+              <p className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-white sm:text-sm">
+                Best Seller:
+              </p>
+
+              {/* Product Title */}
+              <h1 className="font-black uppercase leading-[0.9] tracking-[-0.04em]">
+                <span
+                  className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
+                  style={{ color: PURPLE }}
+                >
+                  Purple
+                </span>
+
+                {/* OG TEE — GOLD + WHITE OUTLINE */}
+                <span
+                  className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
+                  style={{
+                    color: GOLD,
+                    ...outlinedText,
+                  }}
+                >
+                  OG Tee
+                </span>
+              </h1>
+
+              {/* Product Description */}
+              <p className="mt-5 max-w-lg text-sm font-medium leading-relaxed text-white/85 sm:text-base">
+                The original Lucid Lifting piece. Built for training,
+                movement, and everything after.
+              </p>
+
+              {/* CTA */}
+              <div className="mt-7">
+                <a
+                  href="#featured-apparel"
+                  className="inline-flex items-center gap-3 bg-white px-7 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-black transition-all duration-300 hover:bg-[#766284] hover:text-white"
+                >
+                  Shop Purple Tee
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -176,7 +233,7 @@ export const Hero = () => {
         {/* =====================================
             FLOATING LUCID PARTICLES
         ====================================== */}
-        <div className="absolute inset-0 z-[2] overflow-hidden pointer-events-none">
+        <div className="pointer-events-none absolute inset-0 z-[2] overflow-hidden">
           {particles.map((particle, i) => (
             <div
               key={i}
@@ -184,7 +241,7 @@ export const Hero = () => {
               style={{
                 width: `${particle.width}px`,
                 height: `${particle.height}px`,
-                backgroundColor: "#C5A253",
+                backgroundColor: GOLD,
                 opacity: particle.opacity,
                 left: `${particle.left}%`,
                 top: `${particle.top}%`,
@@ -198,30 +255,85 @@ export const Hero = () => {
         </div>
 
         {/* =====================================
-            HERO CONTENT
+            COLLAGE HERO CONTENT
         ====================================== */}
         <div className="relative z-10 flex min-h-screen items-end">
           <div className="w-full px-6 pb-16 pt-40 sm:px-10 md:pb-20 lg:px-16 xl:px-24">
             <div className="max-w-3xl">
+
+              {/* Brand Eyebrow */}
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-white/90 sm:text-sm">
                 Lucid Lifting
               </p>
 
-              <h1 className="text-4xl font-black uppercase leading-[0.95] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
-                Built for the gym.
+              {/* Main Headline */}
+              <h1 className="text-3xl font-black uppercase leading-[0.95] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
+
+                {/* BUILD */}
+                <span
+                  className="text-white"
+                  style={{
+                    textShadow: "0 2px 8px rgba(0,0,0,0.65)",
+                  }}
+                >
+                  Build{" "}
+                </span>
+
+                {/* IN THE */}
+                <span
+                  style={{
+                    color: PURPLE,
+                    ...outlinedText,
+                  }}
+                >
+                  in the{" "}
+                </span>
+
+                {/* GYM */}
+                <span
+                  style={{
+                    color: GOLD,
+                    ...outlinedText,
+                  }}
+                >
+                  gym.
+                </span>
+
                 <br />
-                Worn everywhere.
+
+                {/* LIVE */}
+                <span
+                  style={{
+                    color: PURPLE,
+                    ...outlinedText,
+                  }}
+                >
+                  Live{" "}
+                </span>
+
+                {/* EVERYWHERE */}
+                <span
+                  style={{
+                    color: GOLD,
+                    ...outlinedText,
+                  }}
+                >
+                  everywhere.
+                </span>
               </h1>
 
-              <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/75 sm:text-base">
-                Premium training apparel built around discipline,
-                movement, and the mindset to stay lucid.
+              {/* Brand Description */}
+              <p className="mt-5 max-w-xl text-sm font-medium leading-relaxed text-white/80 sm:text-base">
+                Training is the foundation. Life is the proving ground.
+                Build the strength, confidence, and capability to go
+                wherever life takes you.
               </p>
 
+              {/* CTA */}
               <div className="mt-8">
                 <a
                   href="#featured-apparel"
-                  className="inline-flex items-center gap-3 bg-white px-7 py-4 text-xs font-bold uppercase tracking-[0.14em] text-black transition-all duration-300 hover:bg-white/85"
+                  className="inline-flex items-center gap-3 bg-white px-7 py-4 text-xs font-bold uppercase tracking-[0.14em] text-black transition-all duration-300 hover:bg-[#766284] hover:text-white"
                 >
                   Shop Now
                   <ArrowRight className="h-4 w-4" />
