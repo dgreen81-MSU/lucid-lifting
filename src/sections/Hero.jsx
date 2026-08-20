@@ -1,216 +1,293 @@
-import { AnimatedBorderButton } from "../components/AnimatedBorderButton";
-import { Button } from "../components/Button";
-import { ArrowRight, ChevronDown } from "lucide-react";
-import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
-
-const skills = [
-  "Mindset",
-  "Purpose",
-  "Discipline",
-  "Strength",
-  "Growth",
-  "Leadership",
-  "Inspiration",
-  "Community",
-  "Resilience",
-  "Legacy",
-];
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ArrowRight } from "lucide-react";
 
 export const Hero = () => {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [progress, setProgress] = useState(0);
+
+  const videoRef = useRef(null);
+
+  const COLLAGE_DURATION = 12000;
+
+  /* =========================================
+     PARTICLES
+     Generate once so they don't jump around
+  ========================================== */
+  const particles = useMemo(
+    () =>
+      [...Array(32)].map(() => ({
+        width: 5 + Math.random() * 5,
+        height: 5 + Math.random() * 5,
+        opacity: 0.55 + Math.random() * 0.25,
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        duration: 18 + Math.random() * 18,
+        delay: Math.random() * 6,
+      })),
+    []
+  );
+
+  const goToSlide = (slideIndex) => {
+    setProgress(0);
+    setActiveSlide(slideIndex);
+  };
+
+  /* =========================================
+     COLLAGE TIMER
+  ========================================== */
+  useEffect(() => {
+    if (activeSlide !== 1) return;
+
+    const startTime = Date.now();
+
+    const progressInterval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+
+      const percentage = Math.min(
+        (elapsed / COLLAGE_DURATION) * 100,
+        100
+      );
+
+      setProgress(percentage);
+    }, 50);
+
+    const slideTimer = setTimeout(() => {
+      setProgress(0);
+      setActiveSlide(0);
+    }, COLLAGE_DURATION);
+
+    return () => {
+      clearInterval(progressInterval);
+      clearTimeout(slideTimer);
+    };
+  }, [activeSlide]);
+
+  /* =========================================
+     VIDEO HANDLING
+  ========================================== */
+  useEffect(() => {
+    if (activeSlide !== 0 || !videoRef.current) return;
+
+    const video = videoRef.current;
+
+    video.currentTime = 0;
+
+    const playVideo = async () => {
+      try {
+        await video.play();
+      } catch (error) {
+        console.log("Autoplay prevented:", error);
+      }
+    };
+
+    playVideo();
+
+    const updateVideoProgress = () => {
+      if (!video.duration) return;
+
+      const percentage = Math.min(
+        (video.currentTime / video.duration) * 100,
+        100
+      );
+
+      setProgress(percentage);
+    };
+
+    video.addEventListener("timeupdate", updateVideoProgress);
+
+    return () => {
+      video.removeEventListener(
+        "timeupdate",
+        updateVideoProgress
+      );
+    };
+  }, [activeSlide]);
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <img
-          src="/images/hero-bg.png"
-          alt="Lucid Lifting gym background"
-          className="w-full h-full object-cover opacity-40"
-        />
-
-        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/60 to-background" />
-      </div>
-
-      {/* Floating Dots */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(30)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1.5 h-1.5 rounded-full opacity-60"
-            style={{
-              backgroundColor: "#20B2A6",
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `slow-drift ${
-                15 + Math.random() * 20
-              }s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 5}s`,
-            }}
+    <section
+      id="home"
+      className="relative min-h-screen overflow-hidden bg-black"
+    >
+      {/* =====================================
+          SLIDE 1 — MEOW WOLF VIDEO
+      ====================================== */}
+      <div
+        className={`absolute inset-0 transition-opacity duration-1000 ${
+          activeSlide === 0
+            ? "z-10 opacity-100"
+            : "pointer-events-none z-0 opacity-0"
+        }`}
+      >
+        <video
+          ref={videoRef}
+          className="h-full w-full object-cover"
+          muted
+          playsInline
+          preload="auto"
+          onEnded={() => {
+            setProgress(0);
+            setActiveSlide(1);
+          }}
+        >
+          <source
+            src="/videos/lucid-meow-wolf.mp4"
+            type="video/mp4"
           />
-        ))}
+        </video>
+
+        {/* Slight overlay */}
+        <div className="absolute inset-0 bg-black/10" />
+
+        {/* Video Shop Button */}
+        <div className="absolute inset-x-0 bottom-20 z-20 flex justify-center">
+          <a
+            href="#featured-apparel"
+            className="inline-flex items-center gap-3 bg-black px-8 py-4 text-xs font-bold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-white hover:text-black"
+          >
+            Shop Now
+            <ArrowRight className="h-4 w-4" />
+          </a>
+        </div>
       </div>
 
-      {/* Content */}
-      <div className="container mx-auto px-6 pt-32 pb-20 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Text Content */}
-          <div className="space-y-8">
-            <div className="animate-fade-in">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-primary">
-                <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                Apparel • Personal Training • Community
-              </span>
-            </div>
+      {/* =====================================
+          SLIDE 2 — COLLAGE
+      ====================================== */}
+      <div
+        className={`absolute inset-0 transition-opacity duration-1000 ${
+          activeSlide === 1
+            ? "z-10 opacity-100"
+            : "pointer-events-none z-0 opacity-0"
+        }`}
+      >
+        {/* Background Collage */}
+        <div className="absolute inset-0">
+          <img
+            src="/images/hero/lucid-hero-collage.png"
+            alt="Lucid Lifting campaign"
+            className="h-full w-full object-cover object-center"
+          />
 
-            {/* Headline */}
-            <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight animate-fade-in animation-delay-100">
-                More than
-                <span className="text-primary glow-text"> apparel.</span>
+          <div className="absolute inset-0 bg-black/20" />
+
+          <div className="absolute inset-x-0 bottom-0 h-80 bg-gradient-to-t from-background via-background/70 to-transparent" />
+        </div>
+
+        {/* =====================================
+            FLOATING LUCID PARTICLES
+        ====================================== */}
+        <div className="absolute inset-0 z-[2] overflow-hidden pointer-events-none">
+          {particles.map((particle, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full"
+              style={{
+                width: `${particle.width}px`,
+                height: `${particle.height}px`,
+                backgroundColor: "#C5A253",
+                opacity: particle.opacity,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
+                boxShadow:
+                  "0 0 8px rgba(197, 162, 83, 0.40)",
+                animation: `slow-drift ${particle.duration}s ease-in-out infinite`,
+                animationDelay: `${particle.delay}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* =====================================
+            HERO CONTENT
+        ====================================== */}
+        <div className="relative z-10 flex min-h-screen items-end">
+          <div className="w-full px-6 pb-16 pt-40 sm:px-10 md:pb-20 lg:px-16 xl:px-24">
+            <div className="max-w-3xl">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-white/90 sm:text-sm">
+                Lucid Lifting
+              </p>
+
+              <h1 className="text-4xl font-black uppercase leading-[0.95] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+                Built for the gym.
                 <br />
-                Built by
-                <br />
-                <span className="font-serif italic font-normal text-white">
-                  lifters.
-                </span>
+                Worn everywhere.
               </h1>
 
-              <p className="text-lg text-muted-foreground max-w-lg animate-fade-in animation-delay-200">
-                Built for those chasing more than personal records. Lucid
-                Lifting combines premium apparel, personalized coaching, and a
-                community inspired by the relentless pursuit of
-                self-improvement. This is where discipline defeats doubt, pain
-                becomes progress, and visions become reality. In Gym We Trust.
+              <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/75 sm:text-base">
+                Premium training apparel built around discipline,
+                movement, and the mindset to stay lucid.
               </p>
-            </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-4 animate-fade-in animation-delay-300">
-              <Button size="lg">
-                Contact Me
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-
-              <AnimatedBorderButton>
-                Explore Lucid Lifting
-                <ArrowRight className="w-5 h-5" />
-              </AnimatedBorderButton>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex items-center gap-4 animate-fade-in animation-delay-400">
-              <span className="text-sm text-muted-foreground">
-                Join the Movement:
-              </span>
-
-              {[
-                {
-                  icon: FaGithub,
-                  href: "https://github.com/dgreen81-MSU",
-                  label: "GitHub",
-                },
-                {
-                  icon: FaLinkedin,
-                  href: "https://www.linkedin.com/in/davon-green/",
-                  label: "LinkedIn",
-                },
-                {
-                  icon: FaInstagram,
-                  href: "https://www.instagram.com/lucidliftingco/",
-                  label: "Lucid Lifting Instagram",
-                },
-              ].map((social) => (
+              <div className="mt-8">
                 <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.label}
-                  className="p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all duration-300"
+                  href="#featured-apparel"
+                  className="inline-flex items-center gap-3 bg-white px-7 py-4 text-xs font-bold uppercase tracking-[0.14em] text-black transition-all duration-300 hover:bg-white/85"
                 >
-                  <social.icon className="w-5 h-5" />
+                  Shop Now
+                  <ArrowRight className="h-4 w-4" />
                 </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Right Column - Brand Image */}
-          <div className="relative animate-fade-in animation-delay-300">
-            <div className="relative max-w-md mx-auto">
-              {/* Animated Glow */}
-              <div
-                className="
-                  absolute inset-0 rounded-3xl
-                  bg-gradient-to-br
-                  from-primary/30
-                  via-transparent
-                  to-primary/10
-                  blur-2xl
-                  animate-pulse-glow
-                "
-              />
-
-              {/* Lucid Lifting Emblem */}
-              <div className="relative glass rounded-3xl p-4 glow-border">
-                <img
-                  src="/images/lucid-lifting-emblem.png"
-                  alt="Lucid Lifting emblem"
-                  className="w-full aspect-[4/5] object-contain rounded-2xl"
-                />
               </div>
-
-              {/* Launch Badge */}
-              <div className="absolute -bottom-4 -right-4 glass rounded-xl px-4 py-3 animate-float">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-
-                  <span className="text-sm font-medium">
-                    Building the Vision
-                  </span>
-                </div>
-              </div>
-
-              {/* Established Badge */}
-              <div className="absolute -top-4 -left-4 glass rounded-xl px-4 py-3 animate-float animation-delay-500">
-                <div className="text-xs uppercase tracking-wider text-muted-foreground">
-                  EST.
-                </div>
-
-                <div className="text-2xl font-bold text-primary">2026</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Brand Values */}
-        <div className="mt-20 animate-fade-in animation-delay-600">
-          <p className="text-sm text-muted-foreground mb-6 text-center">
-            Lucid Lifting Is Built On:
-          </p>
-
-          <div className="relative overflow-hidden">
-            <div className="flex animate-marquee">
-              {[...skills, ...skills].map((skill, idx) => (
-                <div key={`${skill}-${idx}`} className="flex-shrink-0 px-8 py-4">
-                  <span className="text-xl font-semibold text-muted-foreground/50 hover:text-muted-foreground transition-colors">
-                    {skill}
-                  </span>
-                </div>
-              ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in animation-delay-700">
-        <a
-          href="#about-lucid"
-          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-        >
-          <span className="text-xs uppercase tracking-wider">Scroll</span>
+      {/* =====================================
+          YOUNGLA-STYLE SLIDE CONTROLS
+      ====================================== */}
+      <div className="absolute bottom-10 right-8 z-40 flex items-center gap-3 md:right-12">
+        {[0, 1].map((slideIndex) => {
+          const isActive = activeSlide === slideIndex;
 
-          <ChevronDown className="w-6 h-6 animate-bounce" />
-        </a>
+          return (
+            <button
+              key={slideIndex}
+              onClick={() => goToSlide(slideIndex)}
+              className="group relative flex h-5 w-5 items-center justify-center"
+              aria-label={`Go to slide ${slideIndex + 1}`}
+            >
+              {/* Center dot */}
+              <span
+                className={`absolute h-2 w-2 rounded-full border transition-all duration-300 ${
+                  isActive
+                    ? "scale-125 border-white"
+                    : "border-white/50 bg-white/40 group-hover:bg-white/70"
+                }`}
+              />
+
+              {/* Active progress ring */}
+              {isActive && (
+                <svg
+                  className="absolute h-5 w-5 -rotate-90"
+                  viewBox="0 0 20 20"
+                >
+                  <circle
+                    cx="10"
+                    cy="10"
+                    r="8"
+                    fill="none"
+                    stroke="rgba(255,255,255,0.25)"
+                    strokeWidth="1.5"
+                  />
+
+                  <circle
+                    cx="10"
+                    cy="10"
+                    r="8"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    pathLength="100"
+                    strokeDasharray="100"
+                    strokeDashoffset={100 - progress}
+                    className="transition-[stroke-dashoffset] duration-75 ease-linear"
+                  />
+                </svg>
+              )}
+            </button>
+          );
+        })}
       </div>
     </section>
   );

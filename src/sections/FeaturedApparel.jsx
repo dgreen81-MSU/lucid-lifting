@@ -1,161 +1,269 @@
-import { ArrowUpRight, Eye, ShoppingBag } from "lucide-react";
-import { AnimatedBorderButton } from "../components/AnimatedBorderButton";
+import { ArrowRight } from "lucide-react";
 
 const apparel = [
   {
-    title: "Black Muscle Tank",
-    description:
-      "Our flagship muscle tank featuring the signature Lucid Lifting gorilla emblem. Built for heavy training with premium comfort and everyday wear.",
-    image: "/images/apparel/black-muscle-tank.png",
-    className: "scale-[1.45] translate-y-10 group-hover:scale-[1.52]",
-    tags: ["Apparel", "Gym", "Premium"],
-    link: "#",
-    github: "#",
-  },
-  {
     title: "Purple Logo Tee",
-    description:
-      "A premium everyday tee that blends gym performance with streetwear style.",
+    color: "Purple / Black",
+    price: "$30",
     image: "/images/apparel/purple-logo-tee.png",
-    tags: ["Lifestyle", "Training", "Classic"],
+    hoverImage: "/images/apparel/purple-logo-tee.png",
     link: "#",
-    github: "#",
+    status: "Available Now",
+    stockNote: "Only A Few Remain",
+    sizes: [
+      { size: "XS", available: false },
+      { size: "S", available: false },
+      { size: "M", available: false },
+      { size: "L", available: true },
+      { size: "XL", available: true },
+      { size: "XXL", available: false },
+    ],
   },
   {
-    title: "Weekend Duffel",
-    description:
-      "A spacious gym bag designed for training sessions, weekend trips, and everyday carry.",
-    image: "/images/apparel/weekender-duffel.png",
-    tags: ["Accessories", "Travel", "Gym"],
+    title: "Mile High Crewneck",
+    color: "Royal / Orange / Cream",
+    price: "$45",
+    image: "/images/apparel/mile-high-crewneck-front.png",
+    hoverImage: "/images/apparel/mile-high-crewneck-back.png",
     link: "#",
-    github: "#",
+    status: "Pre-Order Now!",
+    sizes: [
+      { size: "XS", available: true },
+      { size: "S", available: true },
+      { size: "M", available: true },
+      { size: "L", available: true },
+      { size: "XL", available: true },
+      { size: "XXL", available: true },
+    ],
   },
   {
-    title: "Canvas Tote",
-    description:
-      "A durable canvas tote built for everyday essentials while representing the Lucid Lifting lifestyle.",
-    image: "/images/apparel/canvas-tote.png",
-    tags: ["Lifestyle", "Everyday", "Accessories"],
+    title: "Lucid Pink Tank",
+    color: "Pink / Purple",
+    price: "$30",
+    image: "/images/apparel/pink-tank-front.png",
+    hoverImage: "/images/apparel/pink-tank-back.png",
     link: "#",
-    github: "#",
+    status: "Coming Soon",
+    sizes: [
+      { size: "XS", available: false },
+      { size: "S", available: false },
+      { size: "M", available: false },
+      { size: "L", available: false },
+      { size: "XL", available: false },
+      { size: "XXL", available: false },
+    ],
   },
   {
-    title: "Signature Pen",
-    description:
-      "A sleek Lucid Lifting pen for journaling workouts, planning goals, and taking notes.",
-    image: "/images/apparel/signature-pen.png",
-    tags: ["Office", "Lifestyle", "Accessories"],
+    title: "Black Muscle Tank",
+    color: "Black / Purple",
+    price: "$30",
+    image: "/images/apparel/black-muscle-tank-front.png",
+    hoverImage: "/images/apparel/black-muscle-tank-back.png",
     link: "#",
-    github: "#",
+    status: "Coming Soon",
+    sizes: [
+      { size: "XS", available: false },
+      { size: "S", available: false },
+      { size: "M", available: false },
+      { size: "L", available: false },
+      { size: "XL", available: false },
+      { size: "XXL", available: false },
+    ],
   },
 ];
 
 export const FeaturedApparel = () => {
+  const handleSizeClick = (item, size) => {
+    if (!size.available) return;
+
+    // Cart functionality will go here later.
+    console.log(`Selected ${item.title} - ${size.size}`);
+  };
+
   return (
-    <section id="featured-apparel" className="py-32 relative overflow-hidden">
-      {/* Background Glows */}
-      <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 left-0 w-64 h-64 bg-highlight/5 rounded-full blur-3xl" />
+    <section
+      id="featured-apparel"
+      className="relative overflow-hidden bg-white py-16 text-black md:py-20"
+    >
+      <div className="mx-auto w-full max-w-[1700px] px-4 sm:px-6 lg:px-8">
+        {/* =====================================
+            SECTION HEADER
+        ====================================== */}
+        <div className="mb-8 flex flex-col gap-4 border-b border-black/10 pb-5 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-black/45">
+              Lucid Lifting
+            </p>
 
-      <div className="container mx-auto px-6 relative z-10">
-        {/* Section Header */}
-        <div className="text-center mx-auto max-w-3xl mb-16">
-          <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase animate-fade-in">
-            Featured Apparel
-          </span>
+            <h2 className="text-2xl font-black uppercase tracking-tight sm:text-3xl md:text-4xl">
+              Collection 001
+            </h2>
+          </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 animate-fade-in animation-delay-100 text-secondary-foreground">
-            Apparel built to
-            <span className="font-serif italic font-normal text-white">
-              {" "}
-              make an impact.
-            </span>
-          </h2>
-
-          <p className="text-muted-foreground animate-fade-in animation-delay-200">
-            Explore the first Lucid Lifting collection, created for training,
-            everyday wear, and the pursuit of becoming stronger.
-          </p>
+          <a
+            href="#featured-apparel"
+            className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em]"
+          >
+            View All
+            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </a>
         </div>
 
-        {/* Featured Apparel Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
-          {apparel.map((item, idx) => (
+        {/* =====================================
+            PRODUCT GRID
+        ====================================== */}
+        <div className="grid grid-cols-1 gap-x-3 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          {apparel.map((item) => (
             <div
               key={item.title}
-              className="group glass rounded-2xl overflow-hidden animate-fade-in"
-              style={{
-                animationDelay: `${(idx + 1) * 100}ms`,
-              }}
+              className="group block"
             >
-              {/* Image */}
-              <div className="relative aspect-square overflow-hidden flex items-center justify-center">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className={`w-full h-full object-contain transition-transform duration-700 ${
-                    item.className || "group-hover:scale-105"
-                  }`}
-                />
+              {/* =====================================
+                  PRODUCT IMAGE AREA
+              ====================================== */}
+              <div className="relative aspect-[4/5] overflow-hidden bg-[#f5f5f5]">
+                <a
+                  href={item.link}
+                  className="absolute inset-0"
+                  aria-label={`View ${item.title}`}
+                >
+                  {/* Front */}
+                  <img
+                    src={item.image}
+                    alt={`${item.title} front`}
+                    className="absolute inset-0 h-full w-full object-contain p-6 opacity-100 transition-all duration-500 ease-out group-hover:scale-[1.025] group-hover:opacity-0 md:p-8"
+                  />
 
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent opacity-60 pointer-events-none" />
+                  {/* Back / Hover */}
+                  <img
+                    src={item.hoverImage}
+                    alt={`${item.title} back`}
+                    className="absolute inset-0 h-full w-full object-contain p-6 opacity-0 transition-all duration-500 ease-out group-hover:scale-[1.025] group-hover:opacity-100 md:p-8"
+                  />
+                </a>
 
-                {/* Overlay Links */}
-                <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <a
-                    href={item.link}
-                    aria-label={`Shop ${item.title}`}
-                    className="w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-white hover:bg-primary hover:text-primary-foreground transition-colors"
+                {/* =====================================
+                    STATUS BADGE — LEFT
+                ====================================== */}
+                <span
+                  className="absolute bottom-3 left-3 z-20 bg-black px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-white transition-all duration-300 group-hover:bottom-[72px]"
+                >
+                  {item.status}
+                </span>
+
+                {/* =====================================
+                    STOCK NOTE — RIGHT
+                    Purple Tee only
+                ====================================== */}
+                {item.stockNote && (
+                  <span
+                    className="
+                      absolute bottom-3 right-3 z-20
+                      border border-black/20
+                      bg-white
+                      px-2.5 py-1.5
+                      text-[10px] font-bold uppercase
+                      tracking-[0.12em]
+                      text-black
+                      transition-all duration-300
+                      group-hover:bottom-[72px]
+                    "
                   >
-                    <ShoppingBag className="w-5 h-5" />
-                  </a>
+                    {item.stockNote}
+                  </span>
+                )}
 
-                  <a
-                    href={item.link}
-                    aria-label={`View ${item.title}`}
-                    className="w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-white hover:bg-primary hover:text-primary-foreground transition-colors"
-                  >
-                    <Eye className="w-5 h-5" />
-                  </a>
+                {/* =====================================
+                    SIZE SELECTOR
+                ====================================== */}
+                <div
+                  className="
+                    absolute inset-x-0 bottom-0 z-30
+                    translate-y-full
+                    border-t border-black/10
+                    bg-white/95
+                    px-3 py-3
+                    opacity-0
+                    backdrop-blur-sm
+                    transition-all duration-300 ease-out
+                    group-hover:translate-y-0
+                    group-hover:opacity-100
+                    group-focus-within:translate-y-0
+                    group-focus-within:opacity-100
+                  "
+                >
+                  <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.16em] text-black/50">
+                    Select Size
+                  </p>
+
+                  <div className="grid grid-cols-6 gap-1.5">
+                    {item.sizes.map((size) => (
+                      <button
+                        key={size.size}
+                        type="button"
+                        disabled={!size.available}
+                        onClick={() =>
+                          handleSizeClick(item, size)
+                        }
+                        aria-label={`${size.size} ${
+                          size.available
+                            ? "available"
+                            : "sold out"
+                        }`}
+                        className={`
+                          relative flex h-9 items-center justify-center
+                          border text-[10px] font-semibold uppercase
+                          transition-all duration-200
+                          ${
+                            size.available
+                              ? `
+                                cursor-pointer
+                                border-black
+                                bg-white
+                                text-black
+                                hover:bg-black
+                                hover:text-white
+                              `
+                              : `
+                                cursor-not-allowed
+                                border-black/10
+                                bg-black/[0.03]
+                                text-black/25
+                              `
+                          }
+                        `}
+                      >
+                        {size.size}
+
+                        {!size.available && (
+                          <span className="pointer-events-none absolute left-1/2 top-1/2 h-px w-7 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-black/20" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Content */}
-              <div className="p-6 space-y-4">
-                <div className="flex items-start justify-between">
-                  <h3 className="text-xl font-semibold text-secondary-foreground group-hover:text-primary transition-colors">
+              {/* =====================================
+                  PRODUCT INFORMATION
+              ====================================== */}
+              <div className="pt-3">
+                <a href={item.link}>
+                  <h3 className="text-sm font-bold uppercase tracking-[0.03em] transition-opacity hover:opacity-60">
                     {item.title}
                   </h3>
+                </a>
 
-                  <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
-                </div>
-
-                <p className="text-muted-foreground text-sm">
-                  {item.description}
+                <p className="mt-1 text-sm text-black/50">
+                  {item.color}
                 </p>
 
-                <div className="flex flex-wrap gap-2">
-                  {item.tags.map((tag, tagIdx) => (
-                    <span
-                      key={tagIdx}
-                      className="px-4 py-1.5 rounded-full bg-surface text-xs font-medium border border-border/50 text-muted-foreground hover:border-primary/50 hover:text-primary transition-all duration-300"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                <p className="mt-2 text-sm font-semibold">
+                  {item.price}
+                </p>
               </div>
             </div>
           ))}
-        </div>
-
-        {/* View All CTA */}
-        <div className="flex justify-center mt-12 animate-fade-in animation-delay-500">
-          <AnimatedBorderButton>
-            View Full Collection
-            <ArrowUpRight className="w-5 h-5" />
-          </AnimatedBorderButton>
         </div>
       </div>
     </section>

@@ -45,38 +45,29 @@
 
 @layer components {
   .glass {
-    background-color: color-mix(
-      in srgb,
-      var(--color-surface) 50%,
-      transparent
-    );
+    background-color: color-mix(in srgb,
+        var(--color-surface) 50%,
+        transparent);
     backdrop-filter: blur(16px);
-    border: 1px solid
-      color-mix(in srgb, var(--color-border) 50%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
   }
 
   .glass-strong {
-    background-color: color-mix(
-      in srgb,
-      var(--color-surface) 80%,
-      transparent
-    );
+    background-color: color-mix(in srgb,
+        var(--color-surface) 80%,
+        transparent);
     backdrop-filter: blur(16px);
-    border: 1px solid
-      color-mix(in srgb, var(--color-border) 60%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
   }
 
   .glow-text {
-    text-shadow: 0 0 30px
-      color-mix(in srgb, var(--color-primary) 50%, transparent);
+    text-shadow: 0 0 30px color-mix(in srgb, var(--color-primary) 50%, transparent);
   }
 
   .glow-border {
     box-shadow:
-      0 0 20px
-        color-mix(in srgb, var(--color-primary) 20%, transparent),
-      inset 0 0 20px
-        color-mix(in srgb, var(--color-primary) 5%, transparent);
+      0 0 20px color-mix(in srgb, var(--color-primary) 20%, transparent),
+      inset 0 0 20px color-mix(in srgb, var(--color-primary) 5%, transparent);
   }
 }
 
@@ -96,6 +87,7 @@
   }
 
   @keyframes slow-drift {
+
     0%,
     100% {
       transform: translate(0, 0);
@@ -179,21 +171,106 @@
   }
 
   .animated-border:hover {
-    background-color: color-mix(
-      in srgb,
-      #26c4b8 15%,
-      transparent
-    );
+    background-color: color-mix(in srgb,
+        #26c4b8 15%,
+        transparent);
     backdrop-filter: blur(16px);
-    box-shadow: 0 0 20px
-      color-mix(in srgb, #26c4b8 20%, transparent);
+    box-shadow: 0 0 20px color-mix(in srgb, #26c4b8 20%, transparent);
   }
 
   .timeline-glow {
     box-shadow:
-      0 0 40px
-        color-mix(in srgb, var(--color-primary) 35%, transparent),
-      0 0 80px
-        color-mix(in srgb, var(--color-primary) 25%, transparent);
+      0 0 40px color-mix(in srgb, var(--color-primary) 35%, transparent),
+      0 0 80px color-mix(in srgb, var(--color-primary) 25%, transparent);
+  }
+}
+
+/* ==================================================
+   LUCID LIFTING ANNOUNCEMENT BAR
+   ================================================== */
+
+.lucid-announcement-bar {
+  width: 100%;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+
+  background-color: #242424;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* The entire moving row */
+.lucid-marquee-track {
+  display: flex;
+
+  width: max-content;
+
+  flex-shrink: 0;
+
+  animation: lucid-announcement-scroll 28s linear infinite;
+
+  will-change: transform;
+}
+
+/* Each duplicate group */
+.lucid-marquee-content {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+}
+
+/* Individual announcement messages */
+.lucid-announcement-item {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  padding: 0 90px;
+
+  white-space: nowrap;
+
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  line-height: 1;
+
+  letter-spacing: 0.045em;
+
+  text-transform: uppercase;
+}
+
+/* Continuous right-to-left movement */
+@keyframes lucid-announcement-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .lucid-announcement-bar {
+    height: 34px;
+  }
+
+  .lucid-announcement-item {
+    padding: 0 50px;
+
+    font-size: 9px;
+  }
+
+  .lucid-marquee-track {
+    animation-duration: 22s;
   }
 }

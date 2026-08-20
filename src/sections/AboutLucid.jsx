@@ -1,118 +1,98 @@
-import {
-  Shirt,
-  Dumbbell,
-  ClipboardCheck,
-  Users,
-} from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 
-const highlights = [
+const panels = [
   {
-    icon: Shirt,
-    title: "Premium Apparel",
-    description:
-      "Designed to perform in the gym while looking just as good everywhere else.",
+    title: "About",
+    subtitle: "The story behind Lucid",
+    image: "/images/about/about-lucid.jpg",
+    link: "/about",
   },
   {
-    icon: Dumbbell,
-    title: "Personal Training",
-    description:
-      "Evidence-based coaching tailored to your goals, movement quality, and long-term success.",
+    title: "Coaching",
+    subtitle: "Train with purpose",
+    image: "/images/about/coaching.jpg",
+    link: "/coaching",
   },
   {
-    icon: ClipboardCheck,
-    title: "Structured Coaching",
-    description:
-      "A personalized process built around assessments, purposeful programming, and measurable progress.",
-  },
-  {
-    icon: Users,
     title: "Community",
-    description:
-      "A culture built on discipline, accountability, and becoming stronger together.",
+    subtitle: "Built together",
+    image: "/images/about/community.jpg",
+    link: "/community",
   },
 ];
 
 export const AboutLucid = () => {
   return (
-    <section id="about-lucid" className="py-32 relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Column */}
-          <div className="space-y-8">
-            <div className="animate-fade-in">
-              <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase">
-                About Lucid Lifting
-              </span>
-            </div>
+    <section
+      id="about-lucid"
+      className="relative overflow-hidden bg-black"
+    >
+      {/* =====================================
+          SECTION TRANSITION
+      ====================================== */}
+      <div className="relative flex min-h-[150px] items-center justify-between border-b border-white/10 px-6 sm:px-10 lg:px-16 xl:px-24">
+        <div>
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.22em] text-white/45 sm:text-xs">
+            Explore Lucid
+          </p>
 
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight animate-fade-in animation-delay-100 text-secondary-foreground">
-              Built through discipline,
-              <span className="font-serif italic font-normal text-white">
-                {" "}
-                defined by purpose.
-              </span>
-            </h2>
+          <h2 className="text-xl font-black uppercase tracking-tight text-white sm:text-2xl md:text-3xl">
+            More than what you wear.
+          </h2>
+        </div>
 
-            <div className="space-y-4 text-muted-foreground animate-fade-in animation-delay-200">
-              <p>
-                Lucid Lifting is a fitness and lifestyle brand created at the
-                intersection of strength, creativity, and culture. It represents
-                more than what you wear in the gym—it reflects the confidence,
-                discipline, and identity developed through every stage of the
-                journey.
+        <div className="hidden h-10 w-10 items-center justify-center border border-white/20 text-white/60 sm:flex">
+          <ArrowDown className="h-4 w-4" />
+        </div>
+      </div>
+
+      {/* =====================================
+          CATEGORY PANELS
+      ====================================== */}
+      <div className="grid grid-cols-1 gap-[3px] bg-black md:grid-cols-3">
+        {panels.map((panel) => (
+          <a
+            key={panel.title}
+            href={panel.link}
+            className="group relative min-h-[520px] overflow-hidden bg-black md:min-h-[680px]"
+          >
+            {/* Background Image */}
+            <img
+              src={panel.image}
+              alt={panel.title}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]"
+            />
+
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-black/35 transition-colors duration-500 group-hover:bg-black/45" />
+
+            {/* Top Gradient */}
+            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/30 to-transparent" />
+
+            {/* Bottom Gradient */}
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+
+            {/* Content */}
+            <div className="absolute inset-x-0 bottom-0 z-10 p-6 sm:p-8 lg:p-10">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-white/65">
+                {panel.subtitle}
               </p>
 
-              <p>
-                What began as an apparel concept is evolving into a complete
-                fitness experience. From premium apparel and personal training
-                to structured coaching and community support, every part of
-                Lucid Lifting is designed to help people become stronger inside
-                and outside the gym.
-              </p>
-
-              <p>
-                Whether you&apos;re chasing a new personal record, beginning a
-                healthier lifestyle, or striving to become your best self,
-                Lucid Lifting is built to move with you and connect you with a
-                community that values purpose, consistency, and growth.
-              </p>
-            </div>
-
-            <div className="glass rounded-2xl p-6 glow-border animate-fade-in animation-delay-300">
-              <p className="text-lg font-medium italic text-foreground">
-                &quot;We believe strength isn&apos;t measured by a life without
-                struggle, but by the courage to rise after every setback. Every
-                challenge is an opportunity to grow stronger, push forward, and
-                become the person you&apos;re capable of being.&quot;
-              </p>
-            </div>
-          </div>
-
-          {/* Right Column - Highlights */}
-          <div className="grid sm:grid-cols-2 gap-6">
-            {highlights.map((item, idx) => (
-              <div
-                key={item.title}
-                className="group glass p-6 rounded-2xl animate-fade-in"
-                style={{
-                  animationDelay: `${(idx + 1) * 100}ms`,
-                }}
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <item.icon className="h-6 w-6 text-primary" />
-                </div>
-
-                <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
-                  {item.title}
+              <div className="flex items-end justify-between gap-4">
+                <h3 className="text-3xl font-black uppercase tracking-tight text-white sm:text-4xl lg:text-5xl">
+                  {panel.title}
                 </h3>
 
-                <p className="text-sm text-muted-foreground">
-                  {item.description}
-                </p>
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-white/30 bg-black/20 text-white backdrop-blur-sm transition-all duration-300 group-hover:border-white group-hover:bg-white group-hover:text-black">
+                  <ArrowUpRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+
+            {/* Hover Border */}
+            <div className="pointer-events-none absolute inset-0 border border-white/0 transition-colors duration-500 group-hover:border-white/20" />
+          </a>
+        ))}
       </div>
     </section>
   );
