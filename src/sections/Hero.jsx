@@ -5,7 +5,8 @@ export const Hero = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [progress, setProgress] = useState(0);
 
-  const videoRef = useRef(null);
+  const introVideoRef = useRef(null);
+  const meowWolfVideoRef = useRef(null);
 
   const COLLAGE_DURATION = 12000;
 
@@ -46,6 +47,7 @@ export const Hero = () => {
 
   /* =========================================
      COLLAGE TIMER
+     Slide 2 -> Slide 3
   ========================================== */
   useEffect(() => {
     if (activeSlide !== 1) return;
@@ -65,7 +67,7 @@ export const Hero = () => {
 
     const slideTimer = setTimeout(() => {
       setProgress(0);
-      setActiveSlide(0);
+      setActiveSlide(2);
     }, COLLAGE_DURATION);
 
     return () => {
@@ -76,11 +78,22 @@ export const Hero = () => {
 
   /* =========================================
      VIDEO HANDLING
+
+     Slide 1 = Intro Video
+     Slide 3 = Meow Wolf Video
   ========================================== */
   useEffect(() => {
-    if (activeSlide !== 0 || !videoRef.current) return;
+    let video = null;
 
-    const video = videoRef.current;
+    if (activeSlide === 0) {
+      video = introVideoRef.current;
+    }
+
+    if (activeSlide === 2) {
+      video = meowWolfVideoRef.current;
+    }
+
+    if (!video) return;
 
     video.currentTime = 0;
 
@@ -112,6 +125,8 @@ export const Hero = () => {
         "timeupdate",
         updateVideoProgress
       );
+
+      video.pause();
     };
   }, [activeSlide]);
 
@@ -121,7 +136,7 @@ export const Hero = () => {
       className="relative min-h-screen overflow-hidden bg-black"
     >
       {/* =====================================
-          SLIDE 1 — MEOW WOLF VIDEO
+          SLIDE 1 — NEW LUCID INTRO VIDEO
       ====================================== */}
       <div
         className={`absolute inset-0 transition-opacity duration-1000 ${
@@ -131,7 +146,7 @@ export const Hero = () => {
         }`}
       >
         <video
-          ref={videoRef}
+          ref={introVideoRef}
           className="h-full w-full object-cover"
           muted
           playsInline
@@ -142,54 +157,54 @@ export const Hero = () => {
           }}
         >
           <source
-            src="/videos/lucid-meow-wolf.mp4"
+            src="/videos/lucid-intro.mp4"
             type="video/mp4"
           />
         </video>
 
-        {/* Slight dark overlay */}
+        {/* Light overall overlay */}
         <div className="absolute inset-0 bg-black/15" />
 
         {/* Bottom gradient for text readability */}
-        <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
 
         {/* =====================================
-            VIDEO HERO CONTENT
+            INTRO VIDEO CONTENT
         ====================================== */}
         <div className="absolute inset-0 z-20 flex items-end">
           <div className="w-full px-6 pb-20 sm:px-10 md:pb-24 lg:px-16 xl:px-24">
-            <div className="max-w-2xl">
+            <div className="max-w-3xl">
 
               {/* Eyebrow */}
-              <p className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-white sm:text-sm">
-                Best Seller:
+              <p className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-white/90 sm:text-sm">
+                Lucid Lifting
               </p>
 
-              {/* Product Title */}
-              <h1 className="font-black uppercase leading-[0.9] tracking-[-0.04em]">
+              {/* Main Headline */}
+              <h1 className="font-black uppercase leading-[0.92] tracking-[-0.04em]">
                 <span
-                  className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
-                  style={{ color: PURPLE }}
+                  className="block text-4xl text-white sm:text-5xl md:text-6xl lg:text-7xl"
+                  style={{
+                    textShadow: "0 2px 8px rgba(0,0,0,0.65)",
+                  }}
                 >
-                  Purple
+                  Built for more
                 </span>
 
-                {/* OG TEE — GOLD + WHITE OUTLINE */}
                 <span
                   className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
                   style={{
-                    color: GOLD,
+                    color: PURPLE,
                     ...outlinedText,
                   }}
                 >
-                  OG Tee
+                  than lifting.
                 </span>
               </h1>
 
-              {/* Product Description */}
-              <p className="mt-5 max-w-lg text-sm font-medium leading-relaxed text-white/85 sm:text-base">
-                The original Lucid Lifting piece. Built for training,
-                movement, and everything after.
+              {/* Description */}
+              <p className="mt-5 max-w-xl text-sm font-medium leading-relaxed text-white/85 sm:text-base">
+                Performance apparel for wherever you move next.
               </p>
 
               {/* CTA */}
@@ -198,7 +213,7 @@ export const Hero = () => {
                   href="#featured-apparel"
                   className="inline-flex items-center gap-3 bg-white px-7 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-black transition-all duration-300 hover:bg-[#766284] hover:text-white"
                 >
-                  Shop Purple Tee
+                  Shop Lucid
                   <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
@@ -260,7 +275,6 @@ export const Hero = () => {
         <div className="relative z-10 flex min-h-screen items-end">
           <div className="w-full px-6 pb-16 pt-40 sm:px-10 md:pb-20 lg:px-16 xl:px-24">
             <div className="max-w-3xl">
-
               {/* Brand Eyebrow */}
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-white/90 sm:text-sm">
                 Lucid Lifting
@@ -268,18 +282,16 @@ export const Hero = () => {
 
               {/* Main Headline */}
               <h1 className="text-3xl font-black uppercase leading-[0.95] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
-
-                {/* BUILD */}
                 <span
                   className="text-white"
                   style={{
-                    textShadow: "0 2px 8px rgba(0,0,0,0.65)",
+                    textShadow:
+                      "0 2px 8px rgba(0,0,0,0.65)",
                   }}
                 >
                   Build{" "}
                 </span>
 
-                {/* IN THE */}
                 <span
                   style={{
                     color: PURPLE,
@@ -289,7 +301,6 @@ export const Hero = () => {
                   in the{" "}
                 </span>
 
-                {/* GYM */}
                 <span
                   style={{
                     color: GOLD,
@@ -301,7 +312,6 @@ export const Hero = () => {
 
                 <br />
 
-                {/* LIVE */}
                 <span
                   style={{
                     color: PURPLE,
@@ -311,7 +321,6 @@ export const Hero = () => {
                   Live{" "}
                 </span>
 
-                {/* EVERYWHERE */}
                 <span
                   style={{
                     color: GOLD,
@@ -324,9 +333,9 @@ export const Hero = () => {
 
               {/* Brand Description */}
               <p className="mt-5 max-w-xl text-sm font-medium leading-relaxed text-white/80 sm:text-base">
-                Training is the foundation. Life is the proving ground.
-                Build the strength, confidence, and capability to go
-                wherever life takes you.
+                Training is the foundation. Life is the proving
+                ground. Build the strength, confidence, and
+                capability to go wherever life takes you.
               </p>
 
               {/* CTA */}
@@ -345,10 +354,95 @@ export const Hero = () => {
       </div>
 
       {/* =====================================
+          SLIDE 3 — MEOW WOLF VIDEO
+      ====================================== */}
+      <div
+        className={`absolute inset-0 transition-opacity duration-1000 ${
+          activeSlide === 2
+            ? "z-10 opacity-100"
+            : "pointer-events-none z-0 opacity-0"
+        }`}
+      >
+        <video
+          ref={meowWolfVideoRef}
+          className="h-full w-full object-cover"
+          muted
+          playsInline
+          preload="auto"
+          onEnded={() => {
+            setProgress(0);
+            setActiveSlide(0);
+          }}
+        >
+          <source
+            src="/videos/lucid-meow-wolf.mp4"
+            type="video/mp4"
+          />
+        </video>
+
+        {/* Slight dark overlay */}
+        <div className="absolute inset-0 bg-black/15" />
+
+        {/* Bottom gradient for text readability */}
+        <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+        {/* =====================================
+            VIDEO HERO CONTENT
+        ====================================== */}
+        <div className="absolute inset-0 z-20 flex items-end">
+          <div className="w-full px-6 pb-20 sm:px-10 md:pb-24 lg:px-16 xl:px-24">
+            <div className="max-w-2xl">
+              {/* Eyebrow */}
+              <p className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-white sm:text-sm">
+                Best Seller:
+              </p>
+
+              {/* Product Title */}
+              <h1 className="font-black uppercase leading-[0.9] tracking-[-0.04em]">
+                <span
+                  className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
+                  style={{ color: PURPLE }}
+                >
+                  Purple
+                </span>
+
+                <span
+                  className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
+                  style={{
+                    color: GOLD,
+                    ...outlinedText,
+                  }}
+                >
+                  OG Tee
+                </span>
+              </h1>
+
+              {/* Product Description */}
+              <p className="mt-5 max-w-lg text-sm font-medium leading-relaxed text-white/85 sm:text-base">
+                The original Lucid Lifting piece. Built for
+                training, movement, and everything after.
+              </p>
+
+              {/* CTA */}
+              <div className="mt-7">
+                <a
+                  href="#featured-apparel"
+                  className="inline-flex items-center gap-3 bg-white px-7 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-black transition-all duration-300 hover:bg-[#766284] hover:text-white"
+                >
+                  Shop Purple Tee
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* =====================================
           YOUNGLA-STYLE SLIDE CONTROLS
       ====================================== */}
       <div className="absolute bottom-10 right-8 z-40 flex items-center gap-3 md:right-12">
-        {[0, 1].map((slideIndex) => {
+        {[0, 1, 2].map((slideIndex) => {
           const isActive = activeSlide === slideIndex;
 
           return (

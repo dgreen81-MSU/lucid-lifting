@@ -2,22 +2,25 @@ import { ArrowDown, ArrowUpRight } from "lucide-react";
 
 const panels = [
   {
-    title: "About",
-    subtitle: "The story behind Lucid",
-    image: "/images/about/about-lucid.jpg",
-    link: "/about",
-  },
-  {
     title: "Coaching",
     subtitle: "Train with purpose",
-    image: "/images/about/coaching.jpg",
+    image: "/images/coaching-og-tee.png",
     link: "/coaching",
+    imagePosition: "center center",
   },
   {
-    title: "Community",
-    subtitle: "Built together",
-    image: "/images/about/community.jpg",
+    title: "Training",
+    subtitle: "Built for the work",
+    image: "/images/training-og-tee.jpeg",
+    link: "/training",
+    imagePosition: "center 18%",
+  },
+  {
+    title: "Explore",
+    subtitle: "Make the world your gym",
+    image: "/images/manitou-og-tee.jpeg",
     link: "/community",
+    imagePosition: "center center",
   },
 ];
 
@@ -60,6 +63,7 @@ export const AboutLucid = () => {
             <img
               src={panel.image}
               alt={panel.title}
+              style={{ objectPosition: panel.imagePosition }}
               className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]"
             />
 
