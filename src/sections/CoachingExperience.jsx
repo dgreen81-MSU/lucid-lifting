@@ -120,8 +120,8 @@ export const CoachingExperience = () => {
 
   return (
     <section
-      id="coaching-experience"
-      className="relative overflow-hidden bg-[#4B1F6F] text-white py-20 md:py-28"
+      id="how-it-works"
+      className="relative overflow-hidden bg-[#4B1F6F] text-white py-20 md:py-28 scroll-mt-24"
     >
       {/* =========================================================
           ELEPHANT PRINT BACKGROUND
@@ -187,7 +187,6 @@ export const CoachingExperience = () => {
             BENTO GRID
         ========================================================== */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-5">
-
           {/* =======================================================
               01 — BUILT AROUND YOU
           ======================================================== */}
@@ -249,9 +248,7 @@ export const CoachingExperience = () => {
                       key={label}
                       className="flex items-center justify-between gap-4 rounded-xl bg-white/[0.045] border border-white/[0.06] px-4 py-3"
                     >
-                      <span className="text-white/45 text-sm">
-                        {label}
-                      </span>
+                      <span className="text-white/45 text-sm">{label}</span>
 
                       <span className="text-white text-sm font-medium text-right">
                         {value}
@@ -287,18 +284,14 @@ export const CoachingExperience = () => {
             <div className="mt-8 rounded-[22px] bg-white border border-black/[0.06] shadow-sm p-5 transition-transform duration-500 group-hover:-translate-y-1">
               <div className="flex items-center justify-between pb-4 border-b border-black/10">
                 <div>
-                  <p className="font-bold">
-                    Sample Program
-                  </p>
+                  <p className="font-bold">Sample Program</p>
 
                   <p className="text-xs text-black/40 mt-1">
                     Explore a week of Lucid training
                   </p>
                 </div>
 
-                <span className="text-xs text-black/40">
-                  WEEK 1
-                </span>
+                <span className="text-xs text-black/40">WEEK 1</span>
               </div>
 
               <div>
@@ -326,9 +319,7 @@ export const CoachingExperience = () => {
                         </div>
 
                         <div>
-                          <p className="font-semibold text-sm">
-                            {item.workout}
-                          </p>
+                          <p className="font-semibold text-sm">{item.workout}</p>
 
                           <p className="text-black/45 text-xs mt-1">
                             {item.detail}
@@ -423,7 +414,6 @@ export const CoachingExperience = () => {
               03 — COACHING
           ======================================================== */}
           <article className="relative overflow-hidden rounded-[28px] bg-[#111] text-white lg:col-span-5 min-h-[570px] group border border-[#C9A227]/20 shadow-xl">
-
             {/* Dark Lucid background */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#171c1b] via-[#101313] to-black" />
 
@@ -455,8 +445,8 @@ export const CoachingExperience = () => {
               </h3>
 
               <p className="mt-5 text-white/75 max-w-sm leading-relaxed">
-                You&apos;re not just getting a plan. You&apos;re getting
-                ongoing support, feedback, and a coach invested in the process.
+                You&apos;re not just getting a plan. You&apos;re getting ongoing
+                support, feedback, and a coach invested in the process.
               </p>
 
               <div className="mt-auto space-y-3 pt-12">
@@ -465,9 +455,7 @@ export const CoachingExperience = () => {
                     DAVON · COACH
                   </p>
 
-                  <p className="text-sm">
-                    How did that last set feel?
-                  </p>
+                  <p className="text-sm">How did that last set feel?</p>
                 </div>
 
                 <div className="ml-auto max-w-[82%] rounded-2xl rounded-br-sm bg-primary text-black p-4 shadow-lg">
@@ -530,9 +518,7 @@ export const CoachingExperience = () => {
               <div className="mt-auto relative z-10">
                 <p className="text-xs font-bold tracking-[0.35em] uppercase">
                   Make The World
-                  <span className="block">
-                    Your Gym.
-                  </span>
+                  <span className="block">Your Gym.</span>
                 </p>
 
                 <p className="mt-3 text-[10px] uppercase tracking-[0.2em] text-black/40">
@@ -583,9 +569,7 @@ export const CoachingExperience = () => {
                   Strength Progress
                 </p>
 
-                <p className="text-[10px] text-[#C9A227]/70">
-                  Sample Data
-                </p>
+                <p className="text-[10px] text-[#C9A227]/70">Sample Data</p>
               </div>
 
               <div className="h-48 relative">
@@ -665,18 +649,14 @@ export const CoachingExperience = () => {
 
             <div className="mt-4 rounded-xl bg-white/[0.05] border border-white/[0.07] p-4 flex justify-between">
               <div>
-                <p className="font-semibold text-sm">
-                  Bench Press
-                </p>
+                <p className="font-semibold text-sm">Bench Press</p>
 
                 <p className="text-white/40 text-xs mt-1">
                   Illustrative progress
                 </p>
               </div>
 
-              <span className="text-primary font-bold">
-                ↑
-              </span>
+              <span className="text-primary font-bold">↑</span>
             </div>
           </article>
 
@@ -706,24 +686,15 @@ export const CoachingExperience = () => {
 
               <div className="rounded-[22px] bg-white border border-black/[0.06] p-5 shadow-sm">
                 <div className="flex justify-between">
-                  <p className="font-bold">
-                    This Week
-                  </p>
+                  <p className="font-bold">This Week</p>
 
-                  <p className="text-sm text-black/45">
-                    4 / 5 sessions
-                  </p>
+                  <p className="text-sm text-black/45">4 / 5 sessions</p>
                 </div>
 
                 <div className="grid grid-cols-5 gap-3 mt-6">
                   {days.map((item, index) => (
-                    <div
-                      key={`${item.day}-${index}`}
-                      className="text-center"
-                    >
-                      <p className="text-xs text-black/40 mb-2">
-                        {item.day}
-                      </p>
+                    <div key={`${item.day}-${index}`} className="text-center">
+                      <p className="text-xs text-black/40 mb-2">{item.day}</p>
 
                       <div
                         className={`aspect-square rounded-full flex items-center justify-center border ${
@@ -747,9 +718,7 @@ export const CoachingExperience = () => {
                     Training consistency
                   </p>
 
-                  <p className="font-bold text-sm">
-                    On Track
-                  </p>
+                  <p className="font-bold text-sm">On Track</p>
                 </div>
               </div>
             </div>
@@ -777,8 +746,8 @@ export const CoachingExperience = () => {
                   </h3>
 
                   <p className="mt-5 text-white/60 leading-relaxed">
-                    As you progress, we reassess, adjust, and refine your
-                    program so it continues to fit your goals, your life, and
+                    As you progress, we reassess, adjust, and refine your program
+                    so it continues to fit your goals, your life, and
                     what&apos;s next.
                   </p>
                 </div>
@@ -790,10 +759,7 @@ export const CoachingExperience = () => {
                     ["03", "Reassess", "Review and evaluate"],
                     ["04", "Adapt", "Update the plan"],
                   ].map(([number, title, text], index) => (
-                    <div
-                      key={title}
-                      className="relative"
-                    >
+                    <div key={title} className="relative">
                       <div
                         className={`w-12 h-12 rounded-full border flex items-center justify-center font-bold ${
                           index === 3
@@ -804,9 +770,7 @@ export const CoachingExperience = () => {
                         {number}
                       </div>
 
-                      <p className="mt-4 font-bold text-sm uppercase">
-                        {title}
-                      </p>
+                      <p className="mt-4 font-bold text-sm uppercase">{title}</p>
 
                       <p className="mt-2 text-xs leading-relaxed text-white/40">
                         {text}

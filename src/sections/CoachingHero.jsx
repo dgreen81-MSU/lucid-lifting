@@ -1,10 +1,4 @@
 export const CoachingHero = () => {
-  const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
-
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-black">
       {/* Background Video */}
@@ -48,27 +42,27 @@ export const CoachingHero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mt-10">
-            <button
-              onClick={() => scrollToSection("onboarding")}
-              className="px-8 py-4 bg-primary text-black font-semibold uppercase tracking-wider rounded-full hover:scale-[1.02] hover:opacity-90 transition-all duration-300"
+            <a
+              href="#onboarding"
+              className="px-8 py-4 bg-primary text-black text-center font-semibold uppercase tracking-wider rounded-full hover:scale-[1.02] hover:opacity-90 transition-all duration-300"
             >
               Get Started
-            </button>
+            </a>
 
-            <button
-              onClick={() => scrollToSection("coaching-process")}
-              className="px-8 py-4 border border-white/30 bg-black/10 backdrop-blur-sm text-white font-semibold uppercase tracking-wider rounded-full hover:border-primary hover:text-primary transition-all duration-300"
+            <a
+              href="#how-it-works"
+              className="px-8 py-4 border border-white/30 bg-black/10 backdrop-blur-sm text-white text-center font-semibold uppercase tracking-wider rounded-full hover:border-primary hover:text-primary transition-all duration-300"
             >
               How It Works ↓
-            </button>
+            </a>
           </div>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <button
-        onClick={() => scrollToSection("coaching-process")}
-        aria-label="Scroll to coaching process"
+      <a
+        href="#how-it-works"
+        aria-label="Scroll to how coaching works"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 text-white/60 hover:text-primary transition-colors duration-300"
       >
         <div className="flex flex-col items-center gap-2">
@@ -78,7 +72,7 @@ export const CoachingHero = () => {
 
           <span className="text-xl animate-bounce">↓</span>
         </div>
-      </button>
+      </a>
     </section>
   );
 };
