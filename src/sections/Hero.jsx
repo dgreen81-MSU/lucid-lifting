@@ -136,7 +136,7 @@ export const Hero = () => {
       className="relative min-h-screen overflow-hidden bg-black"
     >
       {/* =====================================
-          SLIDE 1 — NEW LUCID INTRO VIDEO
+          SLIDE 1 — LUCID COACHING
       ====================================== */}
       <div
         className={`absolute inset-0 transition-opacity duration-1000 ${
@@ -169,7 +169,7 @@ export const Hero = () => {
         <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
 
         {/* =====================================
-            INTRO VIDEO CONTENT
+            COACHING HERO CONTENT
         ====================================== */}
         <div className="absolute inset-0 z-20 flex items-end">
           <div className="w-full px-6 pb-20 sm:px-10 md:pb-24 lg:px-16 xl:px-24">
@@ -177,7 +177,7 @@ export const Hero = () => {
 
               {/* Eyebrow */}
               <p className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-white/90 sm:text-sm">
-                Lucid Lifting
+                Lucid Coaching
               </p>
 
               {/* Main Headline */}
@@ -188,7 +188,7 @@ export const Hero = () => {
                     textShadow: "0 2px 8px rgba(0,0,0,0.65)",
                   }}
                 >
-                  Built for more
+                  Train with
                 </span>
 
                 <span
@@ -198,22 +198,23 @@ export const Hero = () => {
                     ...outlinedText,
                   }}
                 >
-                  than lifting.
+                  purpose.
                 </span>
               </h1>
 
               {/* Description */}
               <p className="mt-5 max-w-xl text-sm font-medium leading-relaxed text-white/85 sm:text-base">
-                Performance apparel for wherever you move next.
+                Personalized coaching built around your goals, your lifestyle,
+                and the person you want to become.
               </p>
 
               {/* CTA */}
               <div className="mt-7">
                 <a
-                  href="#featured-apparel"
+                  href="/coaching"
                   className="inline-flex items-center gap-3 bg-white px-7 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-black transition-all duration-300 hover:bg-[#766284] hover:text-white"
                 >
-                  Shop Lucid
+                  Explore Coaching
                   <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
