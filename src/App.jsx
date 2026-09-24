@@ -1,13 +1,9 @@
+import { Routes, Route } from "react-router-dom";
+
 import { Navbar } from "./layout/Navbar";
 import { Footer } from "./layout/Footer";
-
-import { Hero } from "./sections/Hero";
-import { AboutLucid } from "./sections/AboutLucid";
-import { FeaturedApparel } from "./sections/FeaturedApparel";
-import { BryonCampaign } from "./sections/BryonCampaign";
-import { TrainingExperience } from "./sections/TrainingExperience";
-import { Community } from "./sections/Community";
-import { Contact } from "./sections/Contact";
+import Home from "./pages/Home";
+import Coaching from "./pages/Coaching";
 
 function App() {
   return (
@@ -15,26 +11,10 @@ function App() {
       <Navbar />
 
       <main>
-        {/* Brand / Campaign Hero */}
-        <Hero />
-
-        {/* Shop First */}
-        <FeaturedApparel />
-
-        {/* Video Campaign */}
-        <BryonCampaign />
-
-        {/* Brand Story */}
-        <AboutLucid />
-
-        {/* Services */}
-        <TrainingExperience />
-
-        {/* Community */}
-        <Community />
-
-        {/* Contact */}
-        <Contact />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/coaching" element={<Coaching />} />
+        </Routes>
       </main>
 
       <Footer />
