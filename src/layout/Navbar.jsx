@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const navLinks = [
   { href: "/#featured-apparel", label: "SHOP" },
   { href: "/#about-lucid", label: "ABOUT" },
-  { href: "/#training-experience", label: "TRAINING" },
+  { href: "/coaching", label: "COACHING" },
 ];
 
 const announcements = [
